@@ -68,12 +68,15 @@ def generate_bus_report(line_number):
     return elems
 
 
-def main():
-    doc = SimpleDocTemplate("bus_report.pdf",pagesize=letter,
+def generate_report(filename, line_number):
+    doc = SimpleDocTemplate("filename",pagesize=letter,
                         rightMargin=72,leftMargin=72,
                         topMargin=72,bottomMargin=18)
-    report_elems = generate_bus_report(1337)
+    report_elems = generate_bus_report(line_number)
     doc.build(report_elems)
+
+def main():
+    generate_report("bus_report.pdf", 1337)
 
 if __name__ == "__main__":
     main()
