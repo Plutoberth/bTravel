@@ -1,0 +1,6 @@
+pip install open-bus-stride-client
+pip install matplotlib
+pip install psutils
+pip install pytz
+pip install geopy
+pip install pandas

@@ -105,7 +105,6 @@ def get_freq_buses(route_list, freq_interval: timedelta, start_time: datetime, e
         result[f].extend(v)
     
     return result
-        
 
 
 def test_bunching_by_hour():
