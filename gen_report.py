@@ -49,11 +49,11 @@ def generate_bus_report(line_number, png_basedir):
     elems.extend(bus_basic_info(styles, line_number))
 
     image_title_and_path = [
-        (ospj(png_basedir, "freq.png"), "Bus Frequency"),
-        (ospj(png_basedir, "route_bunching.png"), "Bus Route Bunching", 
+        ("freq.png", "Bus Frequency"),
+        ("route_bunching.png", "Bus Route Bunching", 
             "How bunched the route is in the route until that station. This doesn't mean that it bunched close to that station, just the current degree of bunching."),
         # ("test2.png", "Bus Route Bunching Difference", "The degree of bunching that each station contributes. Essentially, whether the buses bunched in the route before that station."),
-        (ospj(png_basedir, "bunching_in_day.png"), "Bunching / Time in Day", "Coorelation of bunching to an hour in a weekday")
+        ("bunching_in_day.png", "Bunching / Time in Day", "Coorelation of bunching to an hour in a weekday")
     ]
 
     for image_tpl in image_title_and_path:
@@ -62,7 +62,8 @@ def generate_bus_report(line_number, png_basedir):
         else:
             desc = None
 
-        path, title, *_ = image_tpl
+        filename, title, *_ = image_tpl
+        path = f"./{line_number}_{filename}"
         elems.extend(gen_titled_image(styles, Image(path), title, desc))
 
     return elems
