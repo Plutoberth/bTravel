@@ -49,11 +49,12 @@ def generate_bus_report(line_number, png_basedir):
     elems.extend(bus_basic_info(styles, line_number))
 
     image_title_and_path = [
-        ("freq.png", "Bus Frequency"),
-        ("route_bunching.png", "Bus Route Bunching", 
-            "How bunched the route is in the route until that station. This doesn't mean that it bunched close to that station, just the current degree of bunching."),
+        # ("freq.png", "Bus Frequency"),
+        ("route_journeys.png", "Bus Journeys"),
+        ("bus_stop_bunching.png", "Bus Route Bunching", 
+            "How bunched the bus is in the route until that station. This doesn't mean that it started bunching close to that station, just the current degree of bunching."),
         # ("test2.png", "Bus Route Bunching Difference", "The degree of bunching that each station contributes. Essentially, whether the buses bunched in the route before that station."),
-        ("bunching_in_day.png", "Bunching / Time in Day", "Coorelation of bunching to an hour in a weekday")
+        # ("bunching_in_day.png", "Bunching / Time in Day", "Coorelation of bunching to an hour in a weekday")
     ]
 
     for image_tpl in image_title_and_path:
@@ -63,14 +64,15 @@ def generate_bus_report(line_number, png_basedir):
             desc = None
 
         filename, title, *_ = image_tpl
-        path = f"./{line_number}_{filename}"
-        elems.extend(gen_titled_image(styles, Image(path), title, desc))
+        path = ospj(str(png_basedir), filename)
+        img = Image(path, 450, 450)
+        elems.extend(gen_titled_image(styles, img, title, desc))
 
     return elems
 
 
 def generate_report(filename, png_basedir, line_number):
-    doc = SimpleDocTemplate("filename",pagesize=letter,
+    doc = SimpleDocTemplate(filename, pagesize=letter,
                         rightMargin=72,leftMargin=72,
                         topMargin=72,bottomMargin=18)
     report_elems = generate_bus_report(line_number, png_basedir)
