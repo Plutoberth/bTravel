@@ -1,13 +1,13 @@
-import pandas as pd
 import requests
 import json
+import pandas as pd
 from datetime import datetime
 from collections import OrderedDict
 import matplotlib.pyplot as plt
 
 class BusBunchingAnalyzer:
-    def __init__(self, csv_path: str):
-        self.df = pd.read_csv(csv_path)
+    def __init__(self, df: pd.DataFrame):
+        self.df = df
 
     # Given a journey ref gets all the arrival times for it
     def get_jounry_arrivals(self, jounry_ref, line):
