@@ -2,7 +2,9 @@ import argparse
 import pandas as pd
 from datetime import datetime
 from bunching_analayzer import BusBunchingAnalyzer
+import mapping_functions
 from route_progress_graph import RouteProgressGraphBuilder
+
 
 def main():
     # Create argument parser
@@ -40,9 +42,18 @@ def main():
     # Print result
     print(f'Normalized bunching coefficient for line {line_number}: {coeff}')
 
+    bunching = analyzer.get_line_bunching(line_number, start_time, end_time)
+    station_bunch = mapping_functions.get_line_bunching_avg(bunching)
+    cors = mapping_functions.get_line_stops_cor(line_number, df)
+    mapping_functions.plot_bunching_map(station_bunch, cors)
+
+    print(f'Analyzed bunching heatmap of line {line_number}')
+
     route_progress_graph_builder = RouteProgressGraphBuilder(line_df)
 
     route_progress_graph_builder.plot_bus_line(args.line_id, start_time, end_time)
+
+    print(f'Analyzed route progress graph of line {line_number}')
 
 if __name__ == '__main__':
     main()

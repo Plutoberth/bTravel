@@ -1,3 +1,10 @@
+import json
+import requests
+from collections import defaultdict
+import numpy as np
+import plotly.express as px
+import pandas as pd
+
 # Analyzer functions
 def get_line_bunching_avg(bunching):
     station_bunch = defaultdict(list)
@@ -112,7 +119,11 @@ def plot_bunching_map(station_bunch, cors):
     fig = px.scatter_mapbox(pd.DataFrame(data), lat='lats', lon='lons', color='values', mapbox_style='carto-positron',
                             height=600, width=800, zoom=zoom, center=center, color_continuous_scale="blackbody_r",
                             range_color=[0, 3])
+
+    fig.write_image('fig_export.png')
     return fig
+
+
 
 # plot_bunching_map useage example
 # df = pd.read_csv('VM_9999_2023-01.csv')
