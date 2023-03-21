@@ -77,12 +77,12 @@ def get_starting_time(times, time):
     raise ValueError()
 
 
-def get_freq_buses(route_list, freq_interval: timedelta, start_time: datetime, end_time: datetime):
+def get_freq_buses(analyzer, bus_line, route_list, freq_interval: timedelta, start_time: datetime, end_time: datetime):
     """Get a list of all of the buses, organized by frequency.
 
     :param route_list: the routes
     :param freq_interval: the time delta in hours
-    :return: the dictionary of freq:[buses]
+    :return: the dictionary of freq:bunching coefficient
     """
     result = dict()
     
@@ -102,7 +102,12 @@ def get_freq_buses(route_list, freq_interval: timedelta, start_time: datetime, e
         
         if f not in result:
             result[f] = []
-        result[f].extend(v)
+        
+        bus = analyzer.get_normalized_bunching_coefficient(bus_line, start_time, end_time)
+        result[f].append(bus)
+    
+    for k in result:
+        result[k] = sum(result[k]) / len(result[k])
     
     return result
 
