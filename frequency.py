@@ -91,11 +91,21 @@ def get_freq_buses(route_list, freq_interval: timedelta, start_time: datetime, e
     values = dict()
     while curr_time < end_time:
         keys.append(curr_time)
-        values[curr_time] = 0
+        values[curr_time] = []
         curr_time += freq_interval
     
     for r in route_list:
-        values[get_starting_time(values.keys())] += 1
+        values[get_starting_time(keys, r)].append(r)
+    
+    for k, v in values.items():
+        f = len(v)  # In the future, divide by the hours to get standard unit.
+        
+        if f not in result:
+            result[f] = []
+        result[f].extend(v)
+    
+    return result
+        
 
 
 def test_bunching_by_hour():
