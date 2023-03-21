@@ -119,7 +119,7 @@ def plot_bunching_map(station_bunch, cors):
     fig = px.scatter_mapbox(pd.DataFrame(data), lat='lats', lon='lons', color='values', mapbox_style='carto-positron',
                             height=600, width=800, zoom=zoom, center=center, color_continuous_scale="blackbody_r",
                             range_color=[0, 3])
-    fig.update_traces(marker={'size': 15})
+    fig.update_traces(marker={'size': 10})
 
     return fig
 
