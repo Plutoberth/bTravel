@@ -37,7 +37,7 @@ def main():
     except IndexError:
         raise Exception("The line id was not found")
 
-    basedir = ospj(REPORT_BASEDIR, str(line_number))
+    basedir = ospj(REPORT_BASEDIR, str(args.line_id))
     os.makedirs(basedir, exist_ok=True)
 
     # Create BusBunchingAnalyzer instance
