@@ -120,7 +120,6 @@ def plot_bunching_map(station_bunch, cors):
                             height=600, width=800, zoom=zoom, center=center, color_continuous_scale="blackbody_r",
                             range_color=[0, 3])
 
-    fig.write_image('bus_stop_bunching.png')
     return fig
 
 

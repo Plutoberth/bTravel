@@ -2,7 +2,6 @@ import requests
 import os
 import json
 import pandas as pd
-import math
 import matplotlib.pyplot as plt
 
 class RouteProgressGraphBuilder:
@@ -11,7 +10,7 @@ class RouteProgressGraphBuilder:
         self.groups = self.df[["LINE_ID", "DatedVehicleJourneyRef", "DataFrameRef",
                                "percentageFromStart", "messageCreationTime"]].groupby(self.df.LINE_ID)
     
-    def plot_bus_line(self, line_ref, start_time, end_time):
+    def plot_bus_line(self, line_ref, start_time, end_time, save_path):
         line_rides = self.groups.get_group(line_ref)[["DatedVehicleJourneyRef", "DataFrameRef",
                                                        "percentageFromStart", "messageCreationTime"]].fillna(0)
         line_rides = line_rides.groupby(["DatedVehicleJourneyRef", "DataFrameRef"])
@@ -27,7 +26,7 @@ class RouteProgressGraphBuilder:
 
         ax.set_xlim(start_time, end_time)
 
-        plt.savefig(os.path.normpath(f"{line_ref}_route_journeys.png"))
+        plt.savefig(save_path)
         
     def add_stop_lines(self, line_ref, start_time, end_time):
         j = json.loads(requests.get(f"https://open-bus-stride-api.hasadna.org.il/gtfs_routes/list?line_refs={line_ref}&order_by=date%20desc").text)

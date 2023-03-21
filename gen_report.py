@@ -64,7 +64,7 @@ def generate_bus_report(line_number, png_basedir):
             desc = None
 
         filename, title, *_ = image_tpl
-        path = ospj(str(line_number), filename)
+        path = ospj(str(png_basedir), filename)
         elems.extend(gen_titled_image(styles, Image(path), title, desc))
 
     return elems
