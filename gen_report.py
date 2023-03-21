@@ -5,7 +5,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 
-
+from os.path import join as ospj
 
 def gen_generic_text(style, text, spacer):
     par = Paragraph(text, style)
@@ -40,7 +40,7 @@ def gen_titled_image(styles, image, title, desc=None):
     elems.append(Spacer(1, 16))
     return elems
 
-def generate_bus_report(line_number):
+def generate_bus_report(line_number, png_basedir):
     elems = []
 
     styles=getSampleStyleSheet()
@@ -49,11 +49,11 @@ def generate_bus_report(line_number):
     elems.extend(bus_basic_info(styles, line_number))
 
     image_title_and_path = [
-        ("images/freq.png", "Bus Frequency"),
-        ("images/route_bunching.png", "Bus Route Bunching", 
+        (ospj(png_basedir, "freq.png"), "Bus Frequency"),
+        (ospj(png_basedir, "route_bunching.png"), "Bus Route Bunching", 
             "How bunched the route is in the route until that station. This doesn't mean that it bunched close to that station, just the current degree of bunching."),
         # ("test2.png", "Bus Route Bunching Difference", "The degree of bunching that each station contributes. Essentially, whether the buses bunched in the route before that station."),
-        ("images/bunching_in_day.png", "Bunching / Time in Day", "Coorelation of bunching to an hour in a weekday")
+        (ospj(png_basedir, "bunching_in_day.png"), "Bunching / Time in Day", "Coorelation of bunching to an hour in a weekday")
     ]
 
     for image_tpl in image_title_and_path:
@@ -68,15 +68,15 @@ def generate_bus_report(line_number):
     return elems
 
 
-def generate_report(filename, line_number):
+def generate_report(filename, png_basedir, line_number):
     doc = SimpleDocTemplate("filename",pagesize=letter,
                         rightMargin=72,leftMargin=72,
                         topMargin=72,bottomMargin=18)
-    report_elems = generate_bus_report(line_number)
+    report_elems = generate_bus_report(line_number, png_basedir)
     doc.build(report_elems)
 
 def main():
-    generate_report("bus_report.pdf", 1337)
+    generate_report("bus_report.pdf", "images", 1337)
 
 if __name__ == "__main__":
     main()
