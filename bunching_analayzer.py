@@ -68,6 +68,8 @@ class BusBunchingAnalyzer:
     def get_line_bunching(self, bus_line: str, start_time: datetime, end_time: datetime) -> list:
         """
         Returns a list of tuples representing the bunching coefficients for a given bus line during a given time period.
+        Each tuple contains a datetime object of the time the bus left the first station and a dictionary that maps
+        station ID to the bunching coefficient of the station.
         """
         line_stops = self.get_line_stops(bus_line, start_time, end_time)
         pairs = self.get_pairs(line_stops)
