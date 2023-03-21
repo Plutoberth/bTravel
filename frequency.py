@@ -68,6 +68,36 @@ def generate_bunching_by_hour_graph(line_id_ref, start_time, end_time):
     plt.show()
 
 
+
+def get_starting_time(times, time):
+    for t in times:
+        if time > t:
+            return t
+    
+    raise ValueError()
+
+
+def get_freq_buses(route_list, freq_interval: timedelta, start_time: datetime, end_time: datetime):
+    """Get a list of all of the buses, organized by frequency.
+
+    :param route_list: the routes
+    :param freq_interval: the time delta in hours
+    :return: the dictionary of freq:[buses]
+    """
+    result = dict()
+    
+    curr_time = start_time
+    keys = []
+    values = dict()
+    while curr_time < end_time:
+        keys.append(curr_time)
+        values[curr_time] = 0
+        curr_time += freq_interval
+    
+    for r in route_list:
+        values[get_starting_time(values.keys())] += 1
+
+
 def test_bunching_by_hour():
     ROUTE_LINE_REF = 3315
     START_TIME = datetime(2023, 1, 1, hour=0, minute=0, second=0, tzinfo=pytz.timezone('Israel'))
