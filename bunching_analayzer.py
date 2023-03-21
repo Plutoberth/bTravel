@@ -45,7 +45,7 @@ class BusBunchingAnalyzer:
     # Get all the data for a line for one day
     # The date is isoformat string
     def get_line_data(self, line_num, start_time, end_time):
-        line = self.df[(self.df.LINE_SHORT_NAME == line_num) & self.df.DataFrameRef.between(str(start_time), str(end_time))]
+        line = self.df[(self.df.LINE_SHORT_NAME == line_num) & self.df.messageCreationTime.between(str(start_time), str(end_time))]
         return line
 
     # Wont return journies that didnt stop at the first station
@@ -72,6 +72,7 @@ class BusBunchingAnalyzer:
         station ID to the bunching coefficient of the station.
         """
         line_stops = self.get_line_stops(bus_line, start_time, end_time)
+        
         pairs = self.get_pairs(line_stops)
         
         bunching = []
