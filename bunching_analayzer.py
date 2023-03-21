@@ -78,7 +78,6 @@ class BusBunchingAnalyzer:
         bunching = []
         for j1, j2 in pairs:
             bunching.append((j1[1][2], self.get_journies_diff(j1[1], j2[1])))
-        
         return bunching
         
     def get_normalized_bunching_coefficient(self, bus_line: str, start_time: datetime, end_time: datetime) -> float:
