@@ -27,7 +27,7 @@ class RouteProgressGraphBuilder:
 
         ax.set_xlim(start_time, end_time)
 
-        plt.savefig(os.path.normpath(f"{line_ref}_progress_graph.jpeg"))
+        plt.savefig(os.path.normpath(f"{line_ref}_route_journeys.png"))
         
     def add_stop_lines(self, line_ref, start_time, end_time):
         j = json.loads(requests.get(f"https://open-bus-stride-api.hasadna.org.il/gtfs_routes/list?line_refs={line_ref}&order_by=date%20desc").text)
@@ -53,4 +53,4 @@ class RouteProgressGraphBuilder:
         ax.set_xlabel('Time')
         ax.set_ylabel('Percentage of route completed')
 
-        plt.savefig(f"{line_ref}_{date}_stops.jpeg")
+        plt.savefig(f"{line_ref}_{date}_stops.png")
